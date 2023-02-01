@@ -1,7 +1,7 @@
 ## View the backend live
 
-https://project-math-app-5ldvgodznq-lz.a.run.app 
+https://project-math-app-jh6si7ahmq-lz.a.run.app/
 
 ## View the frontend live
 
-https://mathorama.netlify.app/
+https://math-app.brucette.com/
