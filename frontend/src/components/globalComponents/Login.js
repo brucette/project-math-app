@@ -59,7 +59,7 @@ const Login = () => {
           setActiveError(true);
         }
       })
-  }
+  };
 
   return (
     <PageWrapper>
@@ -74,7 +74,10 @@ const Login = () => {
               type="radio"
               id="register"
               checked={mode === 'register'}
-              onChange={() => setMode('register')} />
+              onChange={() => {
+                setActiveError(false)
+                setMode('register')
+              }} />
           </label>
         </div>
         <div>
@@ -83,38 +86,53 @@ const Login = () => {
               type="radio"
               id="login"
               checked={mode === 'login'}
-              onChange={() => setMode('login')} />
+              onChange={() => {
+                setActiveError(false)
+                setMode('login')
+              }} />
           </label>
         </div>
       </Selection>
       <StyledForm onSubmit={onFormSubmit}>
         <label htmlFor="username">Username
           <input
+            required
             type="text"
             id="username"
             placeholder={mode === 'login' ? 'Enter your username' : 'Choose your username'}
             value={username}
-            onChange={(e) => setUsername(e.target.value)} />
+            onChange={(e) => {
+              setActiveError(false)
+              setUsername(e.target.value)
+            }} />
         </label>
         <label htmlFor="password">Password
           <input
+            required
             type="password"
             id="password"
             placeholder={mode === 'login' ? 'Enter your password' : 'Choose your password'}
             value={password}
-            onChange={(e) => setPassword(e.target.value)} />
+            onChange={(e) => {
+              setActiveError(false)
+              setPassword(e.target.value)
+            }} />
         </label>
         <label htmlFor="email">Email
           <input
+            required
             type="email"
             id="email"
             placeholder={mode === 'login' ? 'Enter your email' : 'Add your email-adress'}
             value={email}
-            onChange={(e) => setEmail(e.target.value)} />
+            onChange={(e) => {
+              setActiveError(false)
+              setEmail(e.target.value)
+            }} />
         </label>
         <StyledButton type="submit">{mode === 'login' ? 'Log In' : 'Submit'}</StyledButton>
       </StyledForm>
-      <p>{activeError ? error : ''}</p>
+      <ErrorDisplay>{activeError ? error : ''}</ErrorDisplay>
     </PageWrapper>
   )
 }
@@ -205,3 +223,6 @@ const StyledButton = styled.button`
   }
 `
 
+const ErrorDisplay = styled.p`
+  margin-top: 2rem;
+`

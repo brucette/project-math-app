@@ -14,7 +14,7 @@ import gameChallengeUserRouter from "./routes/challengeUserRouter";
 import getChallengesRouter from "./routes/getChallengesRouter";
 import challengeStatsRouter from "./routes/challengeStatsRouter";
 
-const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/math"
+const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/math-game"
 mongoose.connect(mongoUrl, {useNewUrlParser: true, useUnifiedTopology: true})
 mongoose.Promise = Promise
 
