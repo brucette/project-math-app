@@ -7,7 +7,7 @@ import { OuterWrapper, Choose, ChoiceWrapper, Choice } from 'Styles/globalStyles
 import BackBtn from 'components/globalComponents/BackBtn';
 import FadeInDownBig from 'Styles/FadeInDownBig';
 
-// Rendered when user makes a choice do do a traning problem set
+// Rendered when user makes a choice to do a traning problem set
 const Categories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

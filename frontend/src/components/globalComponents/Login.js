@@ -4,6 +4,7 @@ import { useDispatch, useSelector, batch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { API_URL } from 'utils/utils';
 import user from 'reducers/user';
+import VipBtn from 'components/userComponents/VipBtn';
 import styled from 'styled-components/macro';
 import { Devices } from 'Styles/globalStyles';
 
@@ -25,26 +26,26 @@ const Login = () => {
     }
   }, [accessToken]);
 
-  const onFormSubmit = (event) => {
-    event.preventDefault();
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ username, password, email })
-    }
-    fetch(API_URL(mode), options)
+  const loginOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ username, password, email })
+  }
+
+  const fetchData = (type, options) => {
+    fetch(API_URL(type), options)
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
           batch(() => {
             localStorage.setItem('accessToken', data.response.accessToken);
             localStorage.setItem('username', data.response.username);
+            dispatch(user.actions.setAccessToken(data.response.accessToken));
             dispatch(user.actions.setUsername(data.response.username));
             dispatch(user.actions.setId(data.response.id));
             dispatch(user.actions.setUserEmail(data.response.email));
-            dispatch(user.actions.setAccessToken(data.response.accessToken));
             dispatch(user.actions.setError(null));
           });
           setActiveError(false);
@@ -59,12 +60,16 @@ const Login = () => {
           setActiveError(true);
         }
       })
+  }
+
+  const onFormSubmit = (event) => {
+    event.preventDefault();
+    fetchData(mode, loginOptions);
   };
 
   return (
     <PageWrapper>
       <Intro>
-        <h1>Welcome!</h1>
         <h2> Please register or sign in </h2>
       </Intro>
       <Selection>
@@ -133,6 +138,7 @@ const Login = () => {
         <StyledButton type="submit">{mode === 'login' ? 'Log In' : 'Submit'}</StyledButton>
       </StyledForm>
       <ErrorDisplay>{activeError ? error : ''}</ErrorDisplay>
+      <VipBtn fetchData={fetchData} />
     </PageWrapper>
   )
 }
